@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:joy/data/candi_data.dart';
 import 'package:joy/screens/detail_screen.dart';
 
+// Import screen profile_screen kamu (sesuaikan path foldernya jika perlu)
+import 'package:joy/screens/profile_screen.dart'; 
+
+// Jika nanti ingin kembali ke CandiDebugHome atau menu lain, 
+// kamu bisa aktifkan kembali import candi_data dan detail_screen.
+
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -16,11 +22,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const CandiDebugHome(),
+      // Ubah home menjadi ProfileScreen() sesuai modul Pertemuan 12[cite: 1]
+      home: const ProfileScreen(), 
     );
   }
 }
-
 class CandiDebugHome extends StatefulWidget {
   const CandiDebugHome({super.key});
 
