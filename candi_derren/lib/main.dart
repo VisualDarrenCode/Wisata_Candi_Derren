@@ -4,7 +4,7 @@ import 'package:joy/screens/detail_screen.dart';
 
 // Import screen profile_screen kamu (sesuaikan path foldernya jika perlu)
 import 'package:joy/screens/profile_screen.dart'; 
-
+import 'package:joy/screens/sign_in_screen.dart'; 
 // Jika nanti ingin kembali ke CandiDebugHome atau menu lain, 
 // kamu bisa aktifkan kembali import candi_data dan detail_screen.
 
@@ -23,7 +23,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // Ubah home menjadi ProfileScreen() sesuai modul Pertemuan 12[cite: 1]
-      home: const ProfileScreen(), 
+      // home: const ProfileScreen(),
+      home: const SignInScreen(), 
     );
   }
 }
