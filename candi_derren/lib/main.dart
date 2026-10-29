@@ -9,10 +9,27 @@ import 'package:joy/screens/sign_in_screen.dart';
 // kamu bisa aktifkan kembali import candi_data dan detail_screen.
 
 void main() => runApp(const MyApp());
-
-class MyApp extends StatelessWidget {
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => FavoriteProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => AuthProvider(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
