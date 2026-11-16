@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:joy/data/candi_data.dart';
 import 'package:joy/screens/detail_screen.dart';
-
+import 'package:joy/screens/home_screen.dart';
 // Import screen profile_screen kamu (sesuaikan path foldernya jika perlu)
 import 'package:joy/screens/profile_screen.dart'; 
 
@@ -23,7 +23,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // Ubah home menjadi ProfileScreen() sesuai modul Pertemuan 12[cite: 1]
-      home: const ProfileScreen(), 
+      // home: const ProfileScreen(), 
+      home: HomeScreen(), 
     );
   }
 }
