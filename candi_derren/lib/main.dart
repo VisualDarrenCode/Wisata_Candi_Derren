@@ -4,15 +4,32 @@ import 'package:joy/screens/detail_screen.dart';
 import 'package:joy/screens/home_screen.dart';
 // Import screen profile_screen kamu (sesuaikan path foldernya jika perlu)
 import 'package:joy/screens/profile_screen.dart'; 
-
+import 'package:joy/screens/sign_in_screen.dart'; 
 // Jika nanti ingin kembali ke CandiDebugHome atau menu lain, 
 // kamu bisa aktifkan kembali import candi_data dan detail_screen.
 
 void main() => runApp(const MyApp());
-
-class MyApp extends StatelessWidget {
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => FavoriteProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => AuthProvider(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
