@@ -1,35 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:joy/data/candi_data.dart';
-import 'package:joy/screens/detail_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:joy/provider/auth_provider.dart';
+import 'package:joy/provider/favorite_provider.dart';
+import 'package:joy/screens/favorite_screen.dart';
 import 'package:joy/screens/home_screen.dart';
-// Import screen profile_screen kamu (sesuaikan path foldernya jika perlu)
-import 'package:joy/screens/profile_screen.dart'; 
-import 'package:joy/screens/sign_in_screen.dart'; 
-// Jika nanti ingin kembali ke CandiDebugHome atau menu lain, 
-// kamu bisa aktifkan kembali import candi_data dan detail_screen.
+import 'package:joy/screens/profile_screen.dart';
+import 'package:joy/screens/search_screen.dart';
 
-void main() => runApp(const MyApp());
+void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => FavoriteProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => AuthProvider(),
-        ),
+        ChangeNotifierProvider(create: (_) => FavoriteProvider()),
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
       ],
       child: const MyApp(),
     ),
   );
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,71 +31,68 @@ class _MyAppState extends State<MyApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // Ubah home menjadi ProfileScreen() sesuai modul Pertemuan 12[cite: 1]
-      // home: const ProfileScreen(), 
-      home: HomeScreen(), 
+      home: const MainScreen(),
     );
   }
 }
-class CandiDebugHome extends StatefulWidget {
-  const CandiDebugHome({super.key});
+
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
 
   @override
-  State<CandiDebugHome> createState() => _CandiDebugHomeState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
-class _CandiDebugHomeState extends State<CandiDebugHome> {
-  int _selectedIndex = 0;
+class _MainScreenState extends State<MainScreen> {
+  // TODO: 1. Deklarasikan variabel
+  int _currentIndex = 0;
 
-  void _goToPrevious() {
-    setState(() {
-      _selectedIndex = (_selectedIndex - 1) % candiList.length;
-      if (_selectedIndex < 0) {
-        _selectedIndex = candiList.length - 1;
-      }
-    });
-  }
-
-  void _goToNext() {
-    setState(() {
-      _selectedIndex = (_selectedIndex + 1) % candiList.length;
-    });
-  }
+  final List<Widget> _children = [
+    HomeScreen(),
+    SearchScreen(),
+    FavoriteScreen(),
+    ProfileScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    final currentCandi = candiList[_selectedIndex];
-
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: DetailScreen(candi: currentCandi),
-          ),
-          Container(
-            padding: const EdgeInsets.all(16),
-            color: Colors.white,
-            child: Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: _goToPrevious,
-                    icon: const Icon(Icons.arrow_left),
-                    label: const Text('Previous'),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: _goToNext,
-                    icon: const Icon(Icons.arrow_right),
-                    label: const Text('Next'),
-                  ),
-                ),
-              ],
+      // TODO: 2. Buat properti body berupa widget yang ditampilkan
+      body: _children[_currentIndex],
+
+      // TODO: 3. Buat properti bottomNavigationBar dengan nilai Theme
+      bottomNavigationBar: Theme(
+        // TODO: 4. Buat data dan child dari Theme
+        data: Theme.of(context).copyWith(canvasColor: Colors.deepPurple[50]),
+        child: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home, color: Colors.deepPurple),
+              label: 'Home',
             ),
-          ),
-        ],
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search, color: Colors.deepPurple),
+              label: 'Search',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite, color: Colors.deepPurple),
+              label: 'Favorite',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person, color: Colors.deepPurple),
+              label: 'Profile',
+            ),
+          ],
+          selectedItemColor: Colors.deepPurple,
+          unselectedItemColor: Colors.deepPurple[100],
+          showUnselectedLabels: true,
+        ),
       ),
     );
   }
